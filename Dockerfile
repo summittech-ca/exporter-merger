@@ -16,8 +16,8 @@ ADD . /go/src/github.com/rebuy-de/exporter-merger/
 RUN cd /go/src/github.com/rebuy-de/exporter-merger/ && make vendor && CGO_ENABLED=0 make install
 
 # final stage
-FROM alpine
+FROM scratch
 WORKDIR /app
 COPY --from=build-env /go/src/github.com/rebuy-de/exporter-merger/merger.yaml /app/
 COPY --from=build-env /go/bin/exporter-merger /app/
-ENTRYPOINT ./exporter-merger
+ENTRYPOINT ["/app/exporter-merger"]
